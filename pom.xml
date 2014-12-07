@@ -8,7 +8,7 @@
     
     <scm>
         <connection>scm:git:ssh://github.com/kkrawczyk/Utilities.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/kkrawczyk/Utilities.git</developerConnection>
+        <developerConnection>scm:git:ssh://kkrawczyk@github.com/kkrawczyk/Utilities.git</developerConnection>
         <url>https://github.com/kkrawczyk/Utilities</url>
         <tag>HEAD</tag>
     </scm>
