@@ -4,8 +4,10 @@ import eu.novait.utilities.storage.exceptions.FTPStorageNotADirectory;
 import eu.novait.utilities.storage.exceptions.FTPStorageNotAFile;
 import eu.novait.utilities.storage.interfaces.IStorageSystem;
 import eu.novait.utilities.storage.interfaces.StorageDirectory;
+import eu.novait.utilities.storage.interfaces.StorageFile;
 import eu.novait.utilities.storage.interfaces.StorageItem;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +39,14 @@ public class FTPStorageSystem implements IStorageSystem {
         this.username = username;
         this.password = password;
         ftp = new FTPClient();
+    }
+    
+    public boolean completePending() throws IOException{
+        return ftp.completePendingCommand();
+    }
+    
+    public String getCWD() throws IOException{
+        return ftp.printWorkingDirectory();
     }
 
     public void setCWD(String cwd) {
@@ -98,7 +108,7 @@ public class FTPStorageSystem implements IStorageSystem {
 
     protected void connectIfNeeded() throws IOException {
         if (!ftp.isConnected()) {
-            Logger.getLogger("").log(Level.INFO, "Not connected - trying to connect");
+            Logger.getLogger(FTPStorageSystem.class.getName()).log(Level.INFO, "Not connected - trying to connect");
             ftp.connect(this.host, (int) this.port);
             if (this.username != null && this.password != null) {
                 ftp.login(username, password);
@@ -106,8 +116,14 @@ public class FTPStorageSystem implements IStorageSystem {
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.enterLocalPassiveMode();
         } else {
-            Logger.getLogger("").log(Level.INFO, "Connected - no action needed");
+            Logger.getLogger(FTPStorageSystem.class.getName()).log(Level.INFO, "Connected - no action needed");
         }
+    }
+
+    @Override
+    public InputStream retrieveFileStream(StorageFile storageFile) throws IOException {
+        InputStream is = ftp.retrieveFileStream(storageFile.getPath());
+        return is;
     }
 
 }
