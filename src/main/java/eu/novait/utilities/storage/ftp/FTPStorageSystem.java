@@ -41,9 +41,7 @@ public class FTPStorageSystem implements IStorageSystem {
 
     public void setCWD(String cwd) {
         try {
-            System.out.println(ftp.printWorkingDirectory());
             ftp.cwd(cwd);
-            System.out.println(ftp.printWorkingDirectory());
         } catch (IOException ex) {
             Logger.getLogger(FTPStorageSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,12 +54,11 @@ public class FTPStorageSystem implements IStorageSystem {
             for (FTPFile f : this.ftp.listFiles()) {
                 if (f.getType() == FTPStorageSystem.FTP_STORAGE_FILE) {
                     FTPStorageFile fsf = FTPStorageFile.createFromFTPFile(f, ftp.printWorkingDirectory());
-                    System.out.println(fsf.getPath());
                     ret.add(fsf);
                 } else if (f.getType() == FTPStorageSystem.FTP_STORAGE_DIRECTORY) {
                     if (!f.getName().equals(".") && !f.getName().equals("..")) {
                         FTPStorageDirectory fsd = FTPStorageDirectory.createFromFTPFile(f, ftp.printWorkingDirectory());
-                        System.out.println(fsd.getPath());
+                        ret.add(fsd);
                     }
                 }
             }
@@ -82,12 +79,10 @@ public class FTPStorageSystem implements IStorageSystem {
             for (FTPFile f : this.ftp.listFiles(dir)) {
                 if (f.getType() == FTPStorageSystem.FTP_STORAGE_FILE) {
                     FTPStorageFile fsf = FTPStorageFile.createFromFTPFile(f, dir);
-                    System.out.println(fsf.getPath());
                     ret.add(fsf);
                 } else if (f.getType() == FTPStorageSystem.FTP_STORAGE_DIRECTORY) {
                     if (!f.getName().equals(".") && !f.getName().equals("..")) {
                         FTPStorageDirectory fsd = FTPStorageDirectory.createFromFTPFile(f, dir);
-                        System.out.println(fsd.getPath());
                     }
                 }
             }

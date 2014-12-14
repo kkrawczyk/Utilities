@@ -12,11 +12,16 @@ import java.util.Date;
  * @author Krzysztof
  */
 public class StorageItem {
+
     protected String name;
     protected StorageDirectory parent;
     private Date createDate;
 
     public StorageItem() {
+    }
+
+    public String getPath() {
+        return "";
     }
 
     /**
@@ -60,5 +65,5 @@ public class StorageItem {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-    
+
 }

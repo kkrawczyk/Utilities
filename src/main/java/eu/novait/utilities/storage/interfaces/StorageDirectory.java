@@ -32,6 +32,7 @@ public class StorageDirectory extends StorageItem {
         this.parent = parent;
     }
 
+    @Override
     public String getPath() {
         if (this.parent == null) {
             return PATH_PREFIX + this.name;

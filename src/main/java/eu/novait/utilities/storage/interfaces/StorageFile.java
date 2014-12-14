@@ -13,6 +13,7 @@ public abstract class StorageFile extends StorageItem {
         this.parent = parent;
     }
 
+    @Override
     public String getPath() {
         if (this.parent == null) {
             return StorageDirectory.PATH_SEPARATOR + this.name;
